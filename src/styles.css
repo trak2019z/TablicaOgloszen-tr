@@ -1,1 +1,63 @@
-/* You can add global styles to this file, and also import other style files */
+body:before {
+  content: "";
+  display: block;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -10;
+  background: url(./assets/background-login2.jpeg) no-repeat center center;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.section-class {
+  display: table;
+  width: 100%;
+}
+
+.middle-container {
+  vertical-align: top;
+  display:table-cell;
+  height: 100vh;
+  padding: 75px;
+}
+
+.content-container {
+  margin: 0 auto;
+  background: #fff;
+  padding: 35px;
+  border-radius: 7px;
+  box-shadow: 0 0 7px rgba(0,0,0,0.1);
+}
+
+.content-container input[type="text"], .content-container input[type="password"]{
+  width: 100%;
+  padding-left: 10px;
+  background: #f4f4f4;
+  height: 40px;
+  border-radius: 5px;
+  font-weight: 600;
+}
+
+.content-container h2 {
+  font-size: 25px;
+  margin: 0;
+  padding-bottom: 30px;
+}
+
+.content-container label {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+@media (max-width:767px) {
+  .middle-container {
+    display: block;
+    padding: 15px;
+    padding-top: 75px;
+  }
+}
