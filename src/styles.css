@@ -54,6 +54,14 @@ body:before {
   margin-bottom: 20px;
 }
 
+.form-group-center {
+  text-align:center;
+}
+
+.button-width {
+  width: 200px;
+}
+
 @media (max-width:767px) {
   .middle-container {
     display: block;

@@ -1,0 +1,87 @@
+<div class="content-container">
+  <form [formGroup]="signUpForm" (ngSubmit)="onSignUp()">
+    <h2>Rejestracja</h2>
+    <!--<button type="button" routerLink="/login" class="btn btn-primary">Powrót do logowania</button>-->
+    <p>Aby utworzyć konto w naszym serwisie wypełnij formularz</p>
+
+    <div class="form-group">
+      <input type="text" formControlName="firstName" id="firstName" placeholder="Imie"
+             class="form-control"
+             [ngClass]="{'is-invalid': (isSubmitted || signUpForm.get('firstName').touched) && signUpForm.get('firstName').invalid}"/>
+      <div *ngIf="(isSubmitted || signUpForm.get('firstName').touched) && signUpForm.get('firstName').invalid"
+           class="invalid-feedback">
+        <div *ngIf="signUpForm.get('firstName').errors['required']">
+          Imie jest wymagane
+        </div>
+        <div *ngIf="signUpForm.get('firstName').errors['maxlength']">
+          Imie jest za długie
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <input type="text" formControlName="lastName" id="lastName" placeholder="Nazwisko"
+             class="form-control"
+             [ngClass]="{'is-invalid': (isSubmitted || signUpForm.get('lastName').touched) && signUpForm.get('lastName').invalid}"/>
+      <div *ngIf="(isSubmitted || signUpForm.get('lastName').touched) && signUpForm.get('lastName').invalid"
+           class="invalid-feedback">
+        <div *ngIf="signUpForm.get('lastName').errors['required']">
+          Nazwisko jest wymagane
+        </div>
+        <div *ngIf="signUpForm.get('lastName').errors['maxlength']">
+          Nazwisko jest za długie
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <input type="text" formControlName="email" id="email" placeholder="Adres e-mail"
+             class="form-control"
+             [ngClass]="{'is-invalid': (isSubmitted || signUpForm.get('email').touched) && signUpForm.get('email').invalid}"/>
+      <div *ngIf="(isSubmitted || signUpForm.get('email').touched) && signUpForm.get('email').invalid"
+           class="invalid-feedback">
+        <div *ngIf="signUpForm.get('email').errors['required']">
+          Adres e-mail jest wymagany
+        </div>
+        <div *ngIf="signUpForm.get('email').errors['email']">
+          Adres e-mail jest niepoprawny
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <input type="password" formControlName="password" id="password" placeholder="Hasło"
+             class="form-control"
+             [ngClass]="{'is-invalid': (isSubmitted || signUpForm.get('password').touched) && signUpForm.get('password').invalid}"/>
+      <div *ngIf="(isSubmitted || signUpForm.get('password').touched) && signUpForm.get('password').invalid"
+           class="invalid-feedback">
+        <div *ngIf="signUpForm.get('password').errors['required']">
+          Hasło jest wymagane
+        </div>
+        <div *ngIf="signUpForm.get('password').errors['minlength']">
+          Hasło jest za krótkie, musi mieć minimum 6 znaków
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <input type="password" formControlName="confirmPassword" id="confirmPassword" placeholder="Powtórzone hasło"
+             class="form-control"
+             [ngClass]="{'is-invalid': (isSubmitted || signUpForm.get('confirmPassword').touched)&& signUpForm.get('confirmPassword').errors}"/>
+      <div *ngIf="(isSubmitted || signUpForm.get('confirmPassword').touched) && signUpForm.get('confirmPassword').errors"
+           class="invalid-feedback">
+        <div *ngIf="signUpForm.get('confirmPassword').errors && signUpForm.get('confirmPassword').errors['notSame']">
+          Wpisane hasła nie są takie same
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="isLoggingError" class="alert alert-danger" role="alert">
+      {{errorMessage}}
+    </div>
+    <div class="form-group-center">
+      <button type="submit" class="btn btn-primary ml-3 button-width">Zarejestruj</button>
+    </div>
+
+  </form>
+</div>
