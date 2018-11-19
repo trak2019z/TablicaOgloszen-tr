@@ -7,7 +7,9 @@ import { UserDetail } from '../auth';
 export class TransformUsernamePipe implements PipeTransform {
 
   transform(value: UserDetail, args: string = ''): any {
-    return value.firstName + ' ' + value.lastName;
+    if (value) {
+      return value.firstName + ' ' + value.lastName;
+    }
   }
 
 }

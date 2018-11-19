@@ -16,6 +16,11 @@ const appRoutes: Routes = [
     component: HomeComponent,
     canActivate: [HomeGuardService]
   },
+  // {
+  //   path: 'groups',
+  //   loadChildren: './groups/groups.module#GroupsModule',
+  //   canLoad: [GroupGuardService]
+  // },
   {
     path: '**',
     component: PageNotFoundComponent
@@ -24,7 +29,7 @@ const appRoutes: Routes = [
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(appRoutes),
+    RouterModule.forRoot(appRoutes)
   ],
   exports: [
     RouterModule

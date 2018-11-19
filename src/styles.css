@@ -43,6 +43,13 @@ body:before {
   font-weight: 600;
 }
 
+.content-container textarea {
+  resize: none;
+  background: #f4f4f4;
+  border-radius: 5px;
+  font-weight: 600;
+}
+
 .content-container h2 {
   font-size: 25px;
   margin: 0;
@@ -54,12 +61,24 @@ body:before {
   margin-bottom: 20px;
 }
 
-.form-group-center {
+.form-group-buttons {
   text-align:center;
 }
 
 .button-width {
   width: 200px;
+}
+
+label {
+  font-weight:bold;
+}
+
+.table td {
+  text-align: center;
+}
+
+.table th {
+  text-align: center;
 }
 
 @media (max-width:767px) {

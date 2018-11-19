@@ -1,0 +1,48 @@
+<div class="content-container">
+  <h2>Lista grup w systemie</h2>
+  <a routerLink="/groups/create" routerLinkActive="active" class="btn btn-info">Stwórz grupę</a>
+  <br><br>
+  <table class="table table-hover table-striped table-bordered">
+    <thead>
+      <tr>
+        <th style="width: 5%">#</th>
+        <th style="width: 20%">Nazwa</th>
+        <th style="width: 40%">Opis</th>
+        <th style="width: 20%">Data utworzenia</th>
+        <th style="width: 15%">Opcje</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let group of groupsList; let i = index">
+        <td>{{i + 1}}</td>
+        <td>{{group.name}}</td>
+        <td>{{group.description}}</td>
+        <td>{{group.creationDate}}</td>
+        <td>
+          <button type="button" [routerLink]="[group.id]" class="btn btn-primary btn-sm">Edytuj</button>
+          <button type="button" (click)="onRemove(group.id)" class="btn btn-danger btn-sm ml-1">Usuń</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Usuń</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Czy na pewno chcesz usunąć grupę ?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-dark" data-dismiss="modal">Nie</button>
+        <button type="button" class="btn btn-danger">Tak</button>
+      </div>
+    </div>
+  </div>
+</div>
