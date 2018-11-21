@@ -1,87 +1,75 @@
-<div class="content-container">
+<mat-card class="content-container">
   <form [formGroup]="signUpForm" (ngSubmit)="onSignUp()">
-    <h2>Rejestracja</h2>
-    <!--<button type="button" routerLink="/login" class="btn btn-primary">Powrót do logowania</button>-->
-    <p>Aby utworzyć konto w naszym serwisie wypełnij formularz</p>
+    <mat-card-title>Rejestracja</mat-card-title>
+    <mat-card-subtitle>
+      Aby utworzyć konto w naszym serwisie wypełnij formularz
+    </mat-card-subtitle>
+    <mat-card-content class="form-container">
+        <mat-form-field>
 
-    <div class="form-group">
-      <input type="text" formControlName="firstName" id="firstName" placeholder="Imie"
-             class="form-control"
-             [ngClass]="{'is-invalid': (isSubmitted || signUpForm.get('firstName').touched) && signUpForm.get('firstName').invalid}"/>
-      <div *ngIf="(isSubmitted || signUpForm.get('firstName').touched) && signUpForm.get('firstName').invalid"
-           class="invalid-feedback">
-        <div *ngIf="signUpForm.get('firstName').errors['required']">
-          Imie jest wymagane
-        </div>
-        <div *ngIf="signUpForm.get('firstName').errors['maxlength']">
-          Imie jest za długie
-        </div>
-      </div>
-    </div>
+          <input formControlName="firstName" id="firstName" matInput placeholder="Imie">
+          <mat-error *ngIf="(isSubmitted || signUpForm.get('firstName').touched) && signUpForm.get('firstName').invalid">
+            <div *ngIf="signUpForm.get('firstName').errors['required']">
+              Imie jest wymagane
+            </div>
+            <div *ngIf="signUpForm.get('firstName').errors['maxlength']">
+              Imie jest za długie
+            </div>
+          </mat-error>
+        </mat-form-field>
 
-    <div class="form-group">
-      <input type="text" formControlName="lastName" id="lastName" placeholder="Nazwisko"
-             class="form-control"
-             [ngClass]="{'is-invalid': (isSubmitted || signUpForm.get('lastName').touched) && signUpForm.get('lastName').invalid}"/>
-      <div *ngIf="(isSubmitted || signUpForm.get('lastName').touched) && signUpForm.get('lastName').invalid"
-           class="invalid-feedback">
-        <div *ngIf="signUpForm.get('lastName').errors['required']">
-          Nazwisko jest wymagane
-        </div>
-        <div *ngIf="signUpForm.get('lastName').errors['maxlength']">
-          Nazwisko jest za długie
-        </div>
-      </div>
-    </div>
+        <mat-form-field>
+        <input formControlName="lastName" id="lastName" matInput placeholder="Nazwisko">
+        <mat-error *ngIf="(isSubmitted || signUpForm.get('lastName').touched) && signUpForm.get('lastName').invalid">
+          <div *ngIf="signUpForm.get('lastName').errors['required']">
+            Nazwisko jest wymagane
+          </div>
+          <div *ngIf="signUpForm.get('lastName').errors['maxlength']">
+            Nazwisko jest za długie
+          </div>
+        </mat-error>
+        </mat-form-field>
 
-    <div class="form-group">
-      <input type="text" formControlName="email" id="email" placeholder="Adres e-mail"
-             class="form-control"
-             [ngClass]="{'is-invalid': (isSubmitted || signUpForm.get('email').touched) && signUpForm.get('email').invalid}"/>
-      <div *ngIf="(isSubmitted || signUpForm.get('email').touched) && signUpForm.get('email').invalid"
-           class="invalid-feedback">
-        <div *ngIf="signUpForm.get('email').errors['required']">
-          Adres e-mail jest wymagany
-        </div>
-        <div *ngIf="signUpForm.get('email').errors['email']">
-          Adres e-mail jest niepoprawny
-        </div>
-      </div>
-    </div>
+        <mat-form-field>
+          <input formControlName="email" id="email" matInput placeholder="Adres e-mail">
+          <mat-error *ngIf="(isSubmitted || signUpForm.get('email').touched) && signUpForm.get('email').invalid">
+            <div *ngIf="signUpForm.get('email').errors['required']">
+              Adres e-mail jest wymagany
+            </div>
+            <div *ngIf="signUpForm.get('email').errors['email']">
+              Adres e-mail jest niepoprawny
+            </div>
+          </mat-error>
+        </mat-form-field>
 
-    <div class="form-group">
-      <input type="password" formControlName="password" id="password" placeholder="Hasło"
-             class="form-control"
-             [ngClass]="{'is-invalid': (isSubmitted || signUpForm.get('password').touched) && signUpForm.get('password').invalid}"/>
-      <div *ngIf="(isSubmitted || signUpForm.get('password').touched) && signUpForm.get('password').invalid"
-           class="invalid-feedback">
-        <div *ngIf="signUpForm.get('password').errors['required']">
-          Hasło jest wymagane
-        </div>
-        <div *ngIf="signUpForm.get('password').errors['minlength']">
-          Hasło jest za krótkie, musi mieć minimum 6 znaków
-        </div>
-      </div>
-    </div>
+        <mat-form-field>
+          <input formControlName="password" id="password" matInput placeholder="Hasło" type="password">
+          <mat-error *ngIf="(isSubmitted || signUpForm.get('password').touched) && signUpForm.get('password').invalid">
+            <div *ngIf="signUpForm.get('password').errors['required']">
+              Hasło jest wymagane
+            </div>
+            <div *ngIf="signUpForm.get('password').errors['minlength']">
+              Hasło jest za krótkie, musi mieć minimum 6 znaków
+            </div>
+          </mat-error>
+        </mat-form-field>
 
-    <div class="form-group">
-      <input type="password" formControlName="confirmPassword" id="confirmPassword" placeholder="Powtórzone hasło"
-             class="form-control"
-             [ngClass]="{'is-invalid': (isSubmitted || signUpForm.get('confirmPassword').touched)&& signUpForm.get('confirmPassword').errors}"/>
-      <div *ngIf="(isSubmitted || signUpForm.get('confirmPassword').touched) && signUpForm.get('confirmPassword').errors"
-           class="invalid-feedback">
-        <div *ngIf="signUpForm.get('confirmPassword').errors && signUpForm.get('confirmPassword').errors['notSame']">
-          Wpisane hasła nie są takie same
+        <mat-form-field>
+          <input formControlName="confirmPassword" id="confirmPassword" matInput placeholder="Powtórzone hasło" type="password">
+          <mat-error *ngIf="(isSubmitted || signUpForm.get('confirmPassword').touched) && signUpForm.get('confirmPassword').errors">
+            <div *ngIf="signUpForm.get('confirmPassword').errors && signUpForm.get('confirmPassword').errors['notSame']">
+              Wpisane hasła nie są takie same
+            </div>
+          </mat-error>
+        </mat-form-field>
+
+        <div *ngIf="isLoggingError" class="alert alert-danger" role="alert">
+          {{errorMessage}}
         </div>
-      </div>
-    </div>
 
-    <div *ngIf="isLoggingError" class="alert alert-danger" role="alert">
-      {{errorMessage}}
-    </div>
-    <div class="form-group-buttons">
-      <button type="submit" class="btn btn-primary ml-3 button-width">Zarejestruj</button>
-    </div>
-
+    </mat-card-content>
+    <mat-card-actions>
+      <button type="submit" mat-raised-button color="primary" class="button-width">Zarejestruj</button>
+    </mat-card-actions>
   </form>
-</div>
+</mat-card>

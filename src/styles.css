@@ -1,3 +1,5 @@
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
 body:before {
   content: "";
   display: block;
@@ -34,21 +36,22 @@ body:before {
   box-shadow: 0 0 7px rgba(0,0,0,0.1);
 }
 
-.content-container input[type="text"], .content-container input[type="password"]{
-  width: 100%;
-  padding-left: 10px;
-  background: #f4f4f4;
-  height: 40px;
-  border-radius: 5px;
-  font-weight: 600;
+.form-container {
+  display: flex;
+  flex-direction: column;
 }
 
-.content-container textarea {
-  resize: none;
-  background: #f4f4f4;
-  border-radius: 5px;
-  font-weight: 600;
+.form-container > * {
+  width: 100%;
 }
+
+mat-card-actions {
+  text-align:center;
+}
+
+/*.content-container {*/
+  /*padding: 35px;*/
+/*}*/
 
 .content-container h2 {
   font-size: 25px;
@@ -71,14 +74,6 @@ body:before {
 
 label {
   font-weight:bold;
-}
-
-.table td {
-  text-align: center;
-}
-
-.table th {
-  text-align: center;
 }
 
 @media (max-width:767px) {

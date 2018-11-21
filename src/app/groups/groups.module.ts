@@ -1,17 +1,18 @@
 import { NgModule } from '@angular/core';
 
-import { SharedModule } from "../shared/shared.module";
-import { GroupsRoutingModule } from "./groups.routing.module";
+import { SharedModule } from '../shared/shared.module';
+import { GroupsRoutingModule } from './groups.routing.module';
 
-import { GroupsListComponent, CreateGroupComponent, EditGroupComponent } from './index';
+import { GroupsListComponent, CreateGroupComponent, EditGroupComponent, RemoveGroupDialogComponent } from './index';
 
-import { GroupsService } from "./groups.service";
+import { GroupsService } from './groups.service';
 
 @NgModule({
   declarations: [
     CreateGroupComponent,
     GroupsListComponent,
-    EditGroupComponent
+    EditGroupComponent,
+    RemoveGroupDialogComponent
   ],
   imports: [
     SharedModule,
@@ -21,6 +22,9 @@ import { GroupsService } from "./groups.service";
     GroupsService
   ],
   exports: [
+  ],
+  entryComponents: [
+    RemoveGroupDialogComponent
   ]
 })
 export class GroupsModule {
