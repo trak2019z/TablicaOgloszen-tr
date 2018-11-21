@@ -10,13 +10,14 @@
         <a class="nav-link" routerLink="/home">Strona główna<span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" routerLink="/sign-up">Rejestracja</a>
+        <a class="nav-link" routerLink="/groups">Grupy</a>
       </li>
     </ul>
     <ul class="navbar-nav">
       <div>
         <span class="navbar-text mr-3"></span>
-        <span class="navbar-text">{{user | transformUsername}}</span>
+        <span class="navbar-text mr-1">{{user | transformUsername}}</span>
+        <span *ngIf="user && user.isAdmin" class="navbar-text admin">[Administrator]</span>
         <button class="btn btn btn-primary ml-3" type="button" (click)="onLogOut()">
           <span>Wyloguj</span>
         </button>
@@ -24,7 +25,3 @@
     </ul>
   </div>
 </nav>
-
-
-
-

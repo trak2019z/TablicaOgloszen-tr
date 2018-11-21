@@ -1,4 +1,7 @@
+table {
+  width: 100%;
+}
+
 .content-container {
   padding: 35px;
-  max-width: 500px;
 }

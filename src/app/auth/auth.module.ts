@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
 
 import { AuthRoutingModule } from './auth.routing.module';
 import { SharedModule } from '../shared/shared.module';
@@ -10,6 +9,7 @@ import { UserService } from './user.service';
 import { HomeGuardService } from './guards/home-guard.service';
 import { LoginGuardService } from './guards/login-guard.service';
 import { SignUpGuardService } from './guards/sign-up-guard.service';
+import { GroupGuardService } from './guards/group-guard.service';
 
 @NgModule({
   declarations: [
@@ -17,7 +17,6 @@ import { SignUpGuardService } from './guards/sign-up-guard.service';
     SignUpComponent
   ],
   imports: [
-    ReactiveFormsModule,
     AuthRoutingModule,
     SharedModule
   ],
@@ -26,6 +25,7 @@ import { SignUpGuardService } from './guards/sign-up-guard.service';
     HomeGuardService,
     LoginGuardService,
     SignUpGuardService,
+    GroupGuardService
   ],
   exports: []
 })

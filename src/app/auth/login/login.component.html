@@ -1,44 +1,43 @@
-<div class="content-container">
+<mat-card class="content-container">
   <form [formGroup]="loginForm" (ngSubmit)="onLogIn()">
-    <h2>Logowanie</h2>
-    <p>Wpisz swój e-mail i hasło aby się zalogować</p>
+    <mat-card-title>Logowanie</mat-card-title>
+    <mat-card-subtitle>
+      Wpisz swój e-mail i hasło aby się zalogować
+    </mat-card-subtitle>
+    <mat-card-content>
+      <div class="form-container">
 
-    <div class="form-group">
-      <input type="text" formControlName="email" id="email" placeholder="Adres e-mail"
-             class="form-control"
-             [ngClass]="{'is-invalid': (isSubmitted || loginForm.get('email').touched) && loginForm.get('email').invalid}"/>
-      <div *ngIf="(isSubmitted || loginForm.get('email').touched) && loginForm.get('email').invalid"
-           class="invalid-feedback">
-        <div *ngIf="loginForm.get('email').errors['required']">
-          Adres e-mail jest wymagany
-        </div>
-        <div *ngIf="loginForm.get('email').errors['email']">
-          Adres e-mail jest niepoprawny
-        </div>
+        <mat-form-field>
+          <input formControlName="email" id="email" matInput placeholder="Adres e-mail">
+          <mat-error *ngIf="(isSubmitted || loginForm.get('email').touched) && loginForm.get('email').invalid">
+            <div *ngIf="loginForm.get('email').errors['required']">
+              Adres e-mail jest wymagany
+            </div>
+            <div *ngIf="loginForm.get('email').errors['email']">
+              Adres e-mail jest niepoprawny
+            </div>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input formControlName="password" id="password" matInput placeholder="Hasło" type="password">
+          <mat-error *ngIf="(isSubmitted || loginForm.get('password').touched) && loginForm.get('password').invalid">
+            <div *ngIf="loginForm.get('password').errors['required']">
+              Hasło jest wymagane
+            </div>
+          </mat-error>
+        </mat-form-field>
+
       </div>
-    </div>
-
-    <div class="form-group">
-      <input type="password" formControlName="password" id="password" placeholder="Hasło"
-             class="form-control"
-             [ngClass]="{'is-invalid': (isSubmitted || loginForm.get('password').touched) && loginForm.get('password').invalid}"/>
-      <div *ngIf="(isSubmitted || loginForm.get('password').touched) && loginForm.get('password').invalid"
-           class="invalid-feedback">
-        <div *ngIf="loginForm.get('password').errors['required']">
-          Hasło jest wymagane
-        </div>
-      </div>
-    </div>
-
-    <div *ngIf="isLoggingError" class="alert alert-danger" role="alert">
-      {{errorMessage}}
-    </div>
-    <div class="form-group-center">
-      <button type="submit" class="btn btn-primary button-width">Zaloguj</button>
-    </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <button type="submit" mat-raised-button color="primary" class="button-width">Zaloguj</button>
+    </mat-card-actions>
+    <mat-card-footer>
+      <hr>
+      Nie masz konta?
+      <a routerLink="/sign-up">Zarejestruj się</a>
+    </mat-card-footer>
   </form>
-  <hr>
-  Nie masz konta?
-  <a routerLink="/sign-up">Zarejestruj się</a>
-</div>
+</mat-card>
 

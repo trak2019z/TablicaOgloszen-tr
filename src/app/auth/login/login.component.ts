@@ -34,8 +34,8 @@ export class LoginComponent implements OnInit {
         .then(() => {
           this.router.navigate(['/home']);
         }).catch(error => {
-        this.isLoggingError = true;
-        this.errorMessage = error.toString();
+          this.isLoggingError = true;
+          this.errorMessage = error.toString();
       })
     }
   }
