@@ -2,8 +2,6 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   MatFormFieldModule,
   MatButtonModule,
@@ -19,20 +17,6 @@ import {
 @NgModule({
   declarations: [],
   imports: [
-    CommonModule,
-    FormsModule,
-    RouterModule,
-    ReactiveFormsModule,
-    BrowserAnimationsModule,
-    MatButtonModule,
-    MatCheckboxModule,
-    MatFormFieldModule,
-    MatSelectModule,
-    MatInputModule,
-    MatCardModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatDialogModule
   ],
   providers: [],
   exports: [
@@ -40,7 +24,6 @@ import {
     FormsModule,
     RouterModule,
     ReactiveFormsModule,
-    BrowserAnimationsModule,
     MatButtonModule,
     MatCheckboxModule,
     MatFormFieldModule,

@@ -1,57 +1,51 @@
-<div class="content-container">
+<mat-card class="content-container">
   <div *ngIf="editGroupForm">
     <form [formGroup]="editGroupForm" (ngSubmit)="onSubmit()">
-      <h2>Edycja grupy</h2>
-      <input hidden formControlName="id"/>
-      <div class="form-group row">
-        <label for="creationDate" class="col-sm-2 col-form-label">Data utworzenia</label>
-        <div class="col-sm-10">
-          <input id="creationDate" formControlName="creationDate" readonly class="form-control-plaintext">
-        </div>
-      </div>
+      <mat-card-title>Edycja grupy</mat-card-title>
 
-      <div class="form-group row">
-        <label for="name" class="col-sm-2 col-form-label">Nazwa</label>
-        <div class="col-sm-10">
-          <input id="name" formControlName="name" type="text" placeholder="Nazwa"
-                 class="form-control"
-                 [ngClass]="{'is-invalid': (isSubmitted || editGroupForm.get('name').touched) && editGroupForm.get('name').invalid}">
-          <div *ngIf="(isSubmitted || editGroupForm.get('name').touched) && editGroupForm.get('name').invalid"
-               class="invalid-feedback">
-            <div *ngIf="editGroupForm.get('name').errors['required']">
-              Nazwa grupy jest wymagana
-            </div>
-            <div *ngIf="editGroupForm.get('name').errors['maxlength']">
-              Nazwa grupy nie może mieć więcej niż 20 znaków
-            </div>
+      <mat-card-content>
+        <div class="form-container">
+
+          <input hidden formControlName="id"/>
+
+          <mat-form-field>
+            <input formControlName="creationDate" id="creationDate" matInput placeholder="Data utworzenia" readonly>
+          </mat-form-field>
+
+          <mat-form-field>
+            <input formControlName="name" id="name" matInput placeholder="Nazwa">
+            <mat-error
+              *ngIf="(isSubmitted || editGroupForm.get('name').touched) && editGroupForm.get('name').invalid">
+              <div *ngIf="editGroupForm.get('name').errors['required']">
+                Nazwa grupy jest wymagana
+              </div>
+              <div *ngIf="editGroupForm.get('name').errors['maxlength']">
+                Nazwa grupy nie może mieć więcej niż 20 znaków
+              </div>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+          <textarea formControlName="description" id="description" matInput placeholder="Opis" rows="2"
+                    style="resize: none;"></textarea>
+            <mat-error
+              *ngIf="(isSubmitted || editGroupForm.get('description').touched) && editGroupForm.get('description').invalid">
+              <div *ngIf="editGroupForm.get('description').errors['maxlength']">
+                Opis grupy nie może mieć więcej niż 255 znaków
+              </div>
+            </mat-error>
+          </mat-form-field>
+
+          <div *ngIf="isFirebaseError" class="alert alert-danger" role="alert">
+            {{errorMessage}}
           </div>
+
         </div>
-      </div>
-
-      <div class="form-group row">
-        <label for="description" class="col-sm-2 col-form-label">Opis</label>
-        <div class="col-sm-10">
-          <textarea rows="2" class="form-control" id="description" formControlName="description" placeholder="Opis"
-                    [ngClass]="{'is-invalid': (isSubmitted || editGroupForm.get('description').touched) && editGroupForm.get('description').invalid}">
-          </textarea>
-          <div
-            *ngIf="(isSubmitted || editGroupForm.get('description').touched) && editGroupForm.get('description').invalid"
-            class="invalid-feedback">
-            <div *ngIf="editGroupForm.get('description').errors['maxlength']">
-              Nazwa grupy nie może mieć więcej niż 255 znaków
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div *ngIf="isFirebaseError" class="alert alert-danger" role="alert">
-        {{errorMessage}}
-      </div>
-
-      <div class="form-group-buttons">
+      </mat-card-content>
+      <mat-card-actions>
         <a routerLink="/groups" routerLinkActive="active" class="btn btn-dark">Powrót</a>
-        <button type="submit" class="btn btn-primary button-width ml-3">Zapisz</button>
-      </div>
+        <button type="submit" mat-raised-button color="primary" class="button-width">Zapisz</button>
+      </mat-card-actions>
     </form>
   </div>
-</div>
+</mat-card>

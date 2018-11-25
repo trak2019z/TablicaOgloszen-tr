@@ -49,31 +49,8 @@ mat-card-actions {
   text-align:center;
 }
 
-/*.content-container {*/
-  /*padding: 35px;*/
-/*}*/
-
-.content-container h2 {
-  font-size: 25px;
-  margin: 0;
-  padding-bottom: 30px;
-}
-
-.content-container label {
-  width: 100%;
-  margin-bottom: 20px;
-}
-
-.form-group-buttons {
-  text-align:center;
-}
-
 .button-width {
   width: 200px;
-}
-
-label {
-  font-weight:bold;
 }
 
 @media (max-width:767px) {

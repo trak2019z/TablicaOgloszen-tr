@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 import { AuthRoutingModule } from './auth.routing.module';
 import { SharedModule } from '../shared/shared.module';
@@ -17,6 +18,7 @@ import { GroupGuardService } from './guards/group-guard.service';
     SignUpComponent
   ],
   imports: [
+    BrowserAnimationsModule,
     AuthRoutingModule,
     SharedModule
   ],
