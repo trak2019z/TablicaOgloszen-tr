@@ -3,7 +3,9 @@
   <div class="middle-container">
     <router-outlet></router-outlet>
   </div>
+  <div *ngIf="isLoading" class="loader-container">
+    <div class="loader"></div>
+  </div>
 </section>
-
 <!--<app-footer></app-footer>-->
 

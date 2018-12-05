@@ -49,22 +49,7 @@ mat-card-actions {
   text-align:center;
 }
 
-/*.content-container {*/
-  /*padding: 35px;*/
-/*}*/
-
-.content-container h2 {
-  font-size: 25px;
-  margin: 0;
-  padding-bottom: 30px;
-}
-
-.content-container label {
-  width: 100%;
-  margin-bottom: 20px;
-}
-
-.form-group-buttons {
+mat-dialog-actions {
   text-align:center;
 }
 
@@ -72,8 +57,8 @@ mat-card-actions {
   width: 200px;
 }
 
-label {
-  font-weight:bold;
+table {
+  width: 100%;
 }
 
 @media (max-width:767px) {

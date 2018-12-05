@@ -3,8 +3,8 @@ import { FormControl, FormGroup, ValidationErrors, Validators } from '@angular/f
 import { Router } from '@angular/router';
 
 import { UserDetail } from '../index';
-import { AuthService } from '../auth.service';
-import { UserService } from '../user.service';
+import { AuthService } from '../services/auth.service';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-sign-up',

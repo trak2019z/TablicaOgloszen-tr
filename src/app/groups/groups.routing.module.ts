@@ -1,13 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { GroupsListComponent, CreateGroupComponent, EditGroupComponent } from './index';
-import { GroupGuardService } from "../auth/guards/group-guard.service";
+import { GroupsListComponent, CreateGroupComponent, EditGroupComponent, GroupUsersListComponent } from './index';
 
 const groupsRouting: Routes = [
   {
-    path: 'groups',
-    canActivate: [GroupGuardService],
+    path: '',
     children: [
       {
         path: '',
@@ -16,6 +14,10 @@ const groupsRouting: Routes = [
       {
         path: 'create',
         component: CreateGroupComponent
+      },
+      {
+        path: ':id/users',
+        component: GroupUsersListComponent,
       },
       {
         path: ':id',

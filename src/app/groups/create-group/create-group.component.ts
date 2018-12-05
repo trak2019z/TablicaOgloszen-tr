@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { GroupsService } from '../groups.service';
-import { Group } from '../group';
+import { Group } from '../group.interface';
 
 @Component({
   selector: 'app-create-group',
@@ -48,7 +48,8 @@ export class CreateGroupComponent implements OnInit {
     return {
       name: this.createGroupForm.value.name,
       description: this.createGroupForm.value.description,
-      creationDate: new Date().toLocaleString()
+      creationDate: new Date().toLocaleString(),
+      users: []
     };
   }
 
