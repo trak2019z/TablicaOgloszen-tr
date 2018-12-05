@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { Group } from '../group';
+import { Group } from '../group.interface';
 import { GroupsService } from '../groups.service';
 
 

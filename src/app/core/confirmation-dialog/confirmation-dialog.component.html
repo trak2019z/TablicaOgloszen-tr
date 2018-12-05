@@ -1,0 +1,16 @@
+<h1 mat-dialog-title>{{data.title}}</h1>
+<div mat-dialog-content>
+  <p>
+   {{data.question}}
+  </p>
+</div>
+<div mat-dialog-actions>
+  <button type="button" mat-raised-button (click)="onNoClick()" class="btn-dark">
+    <mat-icon>clear</mat-icon>
+    Nie
+  </button>
+  <button type="button" mat-raised-button [mat-dialog-close]="data.dataId" cdkFocusInitial class="btn-danger">
+    <mat-icon>done</mat-icon>
+    Tak
+  </button>
+</div>

@@ -6,7 +6,7 @@ import { SharedModule } from '../shared/shared.module';
 
 import { LoginComponent, SignUpComponent } from './index';
 
-import { UserService } from './user.service';
+import { UserService } from './services/user.service';
 import { HomeGuardService } from './guards/home-guard.service';
 import { LoginGuardService } from './guards/login-guard.service';
 import { SignUpGuardService } from './guards/sign-up-guard.service';

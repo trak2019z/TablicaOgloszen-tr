@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { GroupsListComponent, CreateGroupComponent, EditGroupComponent } from './index';
+import { GroupsListComponent, CreateGroupComponent, EditGroupComponent, GroupUsersListComponent } from './index';
 
 const groupsRouting: Routes = [
   {
@@ -14,6 +14,10 @@ const groupsRouting: Routes = [
       {
         path: 'create',
         component: CreateGroupComponent
+      },
+      {
+        path: ':id/users',
+        component: GroupUsersListComponent,
       },
       {
         path: ':id',

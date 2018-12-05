@@ -12,7 +12,8 @@ import { AppRoutingModule } from './app.routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 
-import { AuthService } from './auth/auth.service';
+import { AuthService } from './auth/services/auth.service';
+import { AuthInterceptor } from './auth/services/auth.interceptor';
 import { environment } from '../environments/environment.prod';
 
 @NgModule({
@@ -32,6 +33,7 @@ import { environment } from '../environments/environment.prod';
   ],
   providers: [
     AuthService,
+    AuthInterceptor
   ],
   bootstrap: [
     AppComponent

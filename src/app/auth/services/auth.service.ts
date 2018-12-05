@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 
 import { UserService } from './user.service';
-import { UserDetail } from './user';
+import { UserDetail } from '../user';
 
 @Injectable()
 export class AuthService {
@@ -80,6 +80,7 @@ export class AuthService {
 
   private updateUserDetail(): void {
     this.userService.getUserDetail(this.user.uid.toString()).subscribe(userDetail => {
+      console.log(userDetail);
       this.userDetail.next(userDetail);
     });
   }

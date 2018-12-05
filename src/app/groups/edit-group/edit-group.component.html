@@ -43,8 +43,15 @@
         </div>
       </mat-card-content>
       <mat-card-actions>
-        <a routerLink="/groups" routerLinkActive="active" class="btn btn-dark">Powrót</a>
-        <button type="submit" mat-raised-button color="primary" class="button-width">Zapisz</button>
+        <button type="button" mat-raised-button routerLink="/groups" class="button-width btn-dark">
+          <mat-icon>undo</mat-icon>
+          Powrót
+        </button>
+        <button type="submit" mat-raised-button class="button-width btn-primary"
+                matTooltip="Zapisz zmiany w grupie">
+          <mat-icon>save</mat-icon>
+          Zapisz
+        </button>
       </mat-card-actions>
     </form>
   </div>

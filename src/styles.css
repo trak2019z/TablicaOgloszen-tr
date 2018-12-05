@@ -49,8 +49,16 @@ mat-card-actions {
   text-align:center;
 }
 
+mat-dialog-actions {
+  text-align:center;
+}
+
 .button-width {
   width: 200px;
+}
+
+table {
+  width: 100%;
 }
 
 @media (max-width:767px) {

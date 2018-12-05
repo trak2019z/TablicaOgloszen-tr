@@ -11,14 +11,23 @@ import {
   MatCardModule,
   MatTableModule,
   MatPaginatorModule,
-  MatDialogModule
+  MatDialogModule,
+  MatSortModule,
+  MatIconModule,
+  MatTooltipModule,
+  MatPaginatorIntl
 } from '@angular/material';
+import { getPolishPaginatorIntl } from './polish-paginator-intl';
 
 @NgModule({
   declarations: [],
   imports: [
   ],
-  providers: [],
+  providers: [
+    {
+      provide: MatPaginatorIntl, useValue: getPolishPaginatorIntl()
+    }
+  ],
   exports: [
     CommonModule,
     FormsModule,
@@ -32,7 +41,10 @@ import {
     MatCardModule,
     MatTableModule,
     MatPaginatorModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSortModule,
+    MatIconModule,
+    MatTooltipModule
   ]
 })
 export class SharedModule {
