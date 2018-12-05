@@ -21,7 +21,7 @@ const appRoutes: Routes = [
   {
     path: 'groups',
     loadChildren: './groups/groups.module#GroupsModule',
-    // canLoad: [GroupGuardService]
+    canLoad: [GroupGuardService]
   },
   {
     path: '**',
