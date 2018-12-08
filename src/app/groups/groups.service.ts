@@ -5,8 +5,8 @@ import { AngularFireDatabase } from 'angularfire2/database';
 import { UserService } from '../auth/services/user.service';
 import { Group, GroupUser } from './group.interface';
 
-import { Observable, of } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class GroupsService {
@@ -45,20 +45,16 @@ export class GroupsService {
     return this.angularFireDB.database.ref(this.GROUPS_WITH_SLASH + group.id + this.USERS_WITH_SLASH + groupUser.id).set(groupUser);
   }
 
-  getGroupUsers(groupId: string): Observable<Array<GroupUser>> {
-    return this.angularFireDB.list<GroupUser>(this.GROUPS_WITH_SLASH + groupId + this.USERS).valueChanges();
-      // .pipe(
-      // switchMap((groupUsers: Array<GroupUser>) => {
-
-        // groupUsers.map((groupUser: GroupUser) => {
-        //   this.userService.getUserDetail(groupUser.id).subscribe(result => {
-        //     groupUser.userDetail = result;
-        //   })
-        //   console.log(groupUser);
-        //   return of(groupUser);
-        // })
-    //   })
-    // );
+  getGroupUsers(groupId: string): Observable<GroupUser[]> {
+    return this.angularFireDB.list<GroupUser>(this.GROUPS_WITH_SLASH + groupId + this.USERS).valueChanges()
+      .pipe(
+        map((groupUsers: GroupUser[]) => {
+          return groupUsers.map((groupUser: GroupUser) => {
+            this.userService.getUserDetail(groupUser.id).subscribe(result => groupUser.userDetail = result);
+            return groupUser;
+          });
+        })
+      );
   }
 
   updateGroupUsersList(groupId: string, groupUsers: Array<GroupUser>): void {

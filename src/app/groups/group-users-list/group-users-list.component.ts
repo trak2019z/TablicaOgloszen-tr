@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
-import { MatPaginator, MatTableDataSource, MatSort, MatDialog } from '@angular/material';
+import { MatPaginator, MatTableDataSource, MatSort} from '@angular/material';
 
 import { Group, GroupUser, UserRoleEnum } from '../group.interface';
 import { UserDetail } from '../../auth';
@@ -28,11 +28,11 @@ export class GroupUsersListComponent implements OnInit {
   @ViewChild(MatSort)
   sort: MatSort;
 
-  group: Group;
-
-  addUserForm: FormGroup;
   isSubmitted: boolean = false;
+  addUserForm: FormGroup;
+  ROLES = UserRoleEnum;
 
+  group: Group;
   users: Array<UserDetail>;
 
   constructor(private groupsService: GroupsService,
@@ -45,8 +45,6 @@ export class GroupUsersListComponent implements OnInit {
       }
     )
   }
-
-  ROLES = UserRoleEnum;
 
   ngOnInit() {
     this.addUserForm = new FormGroup({
@@ -69,15 +67,6 @@ export class GroupUsersListComponent implements OnInit {
           })
         })
 
-    })
-  }
-
-  private getUserDetails(): void {
-    this.groupUsersDS.data.forEach((groupUser: GroupUser) => {
-      this.userService.getUserDetail(groupUser.id).subscribe((userDetail: UserDetail) => {
-        groupUser.userDetail = userDetail;
-        console.log(userDetail);
-      })
     })
   }
 

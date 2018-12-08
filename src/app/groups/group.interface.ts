@@ -16,7 +16,7 @@ export interface GroupUser {
 }
 
 export const UserRoleEnum = [
-  {value: 'ADMIN', viewValue: 'Administrator'},
+  {value: 'USER', viewValue: 'Zwykły użytkownik'},
   {value: 'EDITOR', viewValue: 'Redaktor'},
-  {value: 'USER', viewValue: 'Zwykły użytkownik'}
+  {value: 'ADMIN', viewValue: 'Administrator'}
 ];
