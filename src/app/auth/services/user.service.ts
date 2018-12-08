@@ -24,4 +24,8 @@ export class UserService {
   getUserList(): Observable<Array<UserDetail>> {
     return this.angularFireDB.list<UserDetail>(this.USERS).valueChanges();
   }
+
+  isAdmin(userId: string): Observable<boolean> {
+    return this.angularFireDB.object<boolean>(this.USERS_WITH_SLASH + userId + '/isAdmin').valueChanges();
+  }
 }

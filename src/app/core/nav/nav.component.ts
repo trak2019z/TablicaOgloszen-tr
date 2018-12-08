@@ -16,7 +16,6 @@ export class NavComponent implements OnInit {
   constructor(private authService: AuthService,
               private router: Router) {
     this.authService.getUserDetailObservable().subscribe(userDetail => {
-      console.log(userDetail);
       if (userDetail) this.user = userDetail;
     });
   }

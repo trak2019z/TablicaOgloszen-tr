@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { HomeComponent } from './home/home.component';
 import { PageNotFoundComponent } from './core';
 
 import { HomeGuardService } from './auth/guards/home-guard.service';
@@ -15,8 +14,8 @@ const appRoutes: Routes = [
   },
   {
     path: 'home',
-    component: HomeComponent,
-    canActivate: [HomeGuardService]
+    loadChildren: './home/home.module#HomeModule',
+    canLoad: [HomeGuardService],
   },
   {
     path: 'groups',
@@ -35,6 +34,8 @@ const appRoutes: Routes = [
   ],
   exports: [
     RouterModule
+  ],
+  providers: [
   ]
 })
 export class AppRoutingModule {
