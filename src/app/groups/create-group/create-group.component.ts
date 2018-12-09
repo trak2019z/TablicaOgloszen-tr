@@ -3,6 +3,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { GroupsService } from '../groups.service';
+import { CoreService } from '../../core/core.service';
+
 import { Group } from '../group.interface';
 
 @Component({
@@ -18,6 +20,7 @@ export class CreateGroupComponent implements OnInit {
   errorMessage: string;
 
   constructor(private groupsService: GroupsService,
+              private coreService: CoreService,
               private router: Router) {
   }
 
@@ -34,12 +37,13 @@ export class CreateGroupComponent implements OnInit {
     if (this.createGroupForm.valid) {
       this.groupsService.createGroup(this.prepareGroup())
         .then(result => {
+          this.coreService.onSetSuccessMessage('Grupa została dodana');
           this.router.navigate(['/groups']);
         })
         .catch(error => {
           this.isFirebaseError = true;
           this.errorMessage = error.toString();
-          console.log(error);
+          this.coreService.onSetErrorMessage('Nie udało się dodać grupy');
         })
     }
   }

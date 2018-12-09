@@ -1,16 +1,16 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-
 import { MatPaginator, MatTableDataSource, MatSort} from '@angular/material';
 
-import { Group, GroupUser, UserRoleEnum } from '../group.interface';
-import { UserDetail } from '../../auth';
 import { GroupsService } from '../groups.service';
 import { UserService } from '../../auth/services/user.service';
 import { CoreService } from '../../core/core.service';
 
 import { GroupValidators } from '../groups.validators';
+
+import { Group, GroupUser, UserRoleEnum } from '../group.interface';
+import { UserDetail } from '../../auth';
 
 @Component({
   selector: 'app-group-users-list',
@@ -75,9 +75,10 @@ export class GroupUsersListComponent implements OnInit {
     if (this.addUserForm.valid) {
       this.groupsService.addUserToGroup(this.prepareGroupUser(), this.group)
         .then(result => {
+          this.coreService.onSetSuccessMessage('Użytkownik dodany do grupy');
           this.onResetForm();
         }).catch(error => {
-          console.log(error);
+          this.coreService.onSetErrorMessage('Nie udało się dodać użytkownika do grupy');
       })
     }
   }
@@ -97,23 +98,20 @@ export class GroupUsersListComponent implements OnInit {
     this.addUserForm.reset();
   }
 
-  onRemoveUser(userId: string): void {
-    this.groupsService.removeUserFromGroup(this.group.id, userId);
-  }
-
   onOpenConfirmationDialog(id: string, name: string): void {
     let question: string = 'Czy na pewno chcesz usunąć użytkownika ' + name + ' z grupy?';
-    this.coreService.onOpenConfirmationDialog(id, question, 'Usuń użytkownika z grupy').subscribe((id: string) => {
-      if (id) {
-        this.groupsService.removeUserFromGroup(this.group.id, id)
-          .then(result => {
-            console.log(result);
-          })
-          .catch(error => {
-            console.log(error);
-          })
-      }
-    });
+    this.coreService.onOpenConfirmationDialog(id, question, 'Usuń użytkownika z grupy')
+      .subscribe((id: string) => {
+        if (id) {
+          this.groupsService.removeUserFromGroup(this.group.id, id)
+            .then(result => {
+              this.coreService.onSetSuccessMessage('Użytkownik usunięty z grupy');
+            })
+            .catch(error => {
+              this.coreService.onSetErrorMessage('Użytkownik nie został usunięty');
+            })
+        }
+      });
   }
 
   private prepareGroupUser(): GroupUser {

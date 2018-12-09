@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { AuthService } from '../services/auth.service';
+import { CoreService } from '../../core/core.service';
 
 @Component({
   selector: 'app-login',
@@ -17,6 +18,7 @@ export class LoginComponent implements OnInit {
   errorMessage: string;
 
   constructor(private authService: AuthService,
+              private coreService: CoreService,
               private router: Router) {
   }
 
@@ -32,10 +34,12 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid) {
       this.authService.logIn(this.loginForm.value.email, this.loginForm.value.password)
         .then(() => {
+          this.coreService.onSetSuccessMessage('Zalogowano pomyślnie');
           this.router.navigate(['/home']);
         }).catch(error => {
           this.isLoggingError = true;
           this.errorMessage = error.toString();
+          this.coreService.onSetErrorMessage('Logowanie się nie powiodło');
       })
     }
   }

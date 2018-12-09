@@ -29,7 +29,7 @@ export class GroupsListComponent implements OnInit {
         this.groupsDS = new MatTableDataSource<Group>(Array.from(groups));
         this.groupsDS.paginator = this.paginator;
         this.groupsDS.sort = this.sort;
-      })
+      });
   }
 
   ngOnInit() {
@@ -41,10 +41,10 @@ export class GroupsListComponent implements OnInit {
       if (id) {
         this.groupsService.removeGroup(id)
           .then(result => {
-            console.log(result);
+            this.coreService.onSetSuccessMessage('Grupa została usunięta');
           })
           .catch(error => {
-            console.log(error);
+            this.coreService.onSetErrorMessage('Nie udało się usunąć grupy');
           })
       }
     });

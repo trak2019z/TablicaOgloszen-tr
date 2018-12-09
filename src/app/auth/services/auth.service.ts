@@ -4,6 +4,8 @@ import { User } from 'firebase';
 import { Router } from '@angular/router';
 
 import { UserService } from './user.service';
+import { CoreService } from '../../core/core.service';
+
 import { UserDetail } from '../user';
 
 import { Observable, of, Subject } from 'rxjs';
@@ -19,7 +21,8 @@ export class AuthService {
 
   constructor(private angularFire: AngularFireAuth,
               private router: Router,
-              private userService: UserService) {
+              private userService: UserService,
+              private coreService: CoreService) {
     this.angularFire.authState.subscribe(user => {
       this.user = user;
       if (user) this.updateUserDetail();
@@ -44,10 +47,15 @@ export class AuthService {
   }
 
   logOut(): void {
-    this.angularFire.auth.signOut().then(() => {
-      this.userDetail.next(null);
-      this.router.navigate(['/login'])
-    });
+    this.angularFire.auth.signOut()
+      .then(() => {
+        this.userDetail.next(null);
+        this.coreService.onSetSuccessMessage('Wylogowanie zakońone powodzeniem');
+        this.router.navigate(['/login']);
+      })
+      .catch(error => {
+        this.coreService.onSetErrorMessage('Wylogowanie się nie powiodło');
+      });
   }
 
   getUserDetailObservable(): Observable<UserDetail> {

@@ -15,19 +15,27 @@ import { AuthService } from './auth/services/auth.service';
 import { AuthInterceptor } from './auth/services/auth.interceptor';
 import { environment } from '../environments/environment.prod';
 
+import { ToastrModule } from "ngx-toastr";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+
 @NgModule({
   declarations: [
     AppComponent,
   ],
   imports: [
-    BrowserModule,
+    BrowserAnimationsModule,
     SharedModule,
     CoreModule,
     AuthModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
-    AngularFireDatabaseModule
+    AngularFireDatabaseModule,
+    ToastrModule.forRoot({
+      timeOut: 5000,
+      closeButton: false,
+      positionClass: 'toast-bottom-right',
+    }),
   ],
   providers: [
     AuthService,
