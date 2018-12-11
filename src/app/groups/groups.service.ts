@@ -41,8 +41,17 @@ export class GroupsService {
     return this.angularFireDB.database.ref(this.GROUPS_WITH_SLASH + id).remove();
   }
 
-  addUserToGroup(groupUser: GroupUser, group: Group): Promise<Group> {
-    return this.angularFireDB.database.ref(this.GROUPS_WITH_SLASH + group.id + this.USERS_WITH_SLASH + groupUser.id).set(groupUser);
+  addUserToGroup(userId: string, role: string, groupId: string): Promise<Group> {
+    const additionDate: string = new Date().toLocaleString();
+    let groupUser: GroupUser = {
+      userId: userId,
+      role: role,
+      additionDate: additionDate
+    };
+    this.angularFireDB.database.ref('users/' + userId + '/groups/' + groupId)
+      .set(this.prepareUserGroup(groupId, role, additionDate));
+    return this.angularFireDB.database.ref('groups/' + groupId + '/users/' + userId)
+      .set(groupUser);
   }
 
   getGroupUsers(groupId: string): Observable<GroupUser[]> {
@@ -50,7 +59,7 @@ export class GroupsService {
       .pipe(
         map((groupUsers: GroupUser[]) => {
           return groupUsers.map((groupUser: GroupUser) => {
-            this.userService.getUserDetail(groupUser.id).subscribe(result => groupUser.userDetail = result);
+            this.userService.getUserDetail(groupUser.userId).subscribe(result => groupUser.userDetail = result);
             return groupUser;
           });
         })
@@ -58,13 +67,18 @@ export class GroupsService {
   }
 
   updateGroupUsersList(groupId: string, groupUsers: Array<GroupUser>): void {
-    return groupUsers.forEach(data => {
-      this.angularFireDB.database.ref(this.GROUPS_WITH_SLASH + groupId + this.USERS_WITH_SLASH + data.id).set(data);
+    return groupUsers.forEach((groupUser: GroupUser) => {
+      groupUser.userDetail = null;
+      this.angularFireDB.database.ref('groups/' + groupId + '/users/' + groupUser.userId)
+        .set(groupUser);
+      this.angularFireDB.database.ref('users/' + groupUser.userId + '/groups/' + groupId)
+        .set(this.prepareUserGroup(groupId, groupUser.role, groupUser.additionDate));
     })
   }
 
   removeUserFromGroup(groupId: string, userId: string): Promise<GroupUser> {
-    return this.angularFireDB.database.ref(this.GROUPS_WITH_SLASH + groupId + this.USERS_WITH_SLASH + userId).remove();
+    this.angularFireDB.database.ref('users/' + userId + '/groups/' + groupId).remove();
+    return this.angularFireDB.database.ref('groups/' + groupId + '/users/' + userId).remove();
   }
 
   isUserBelongToGroup(groupId: string, userId: string): Observable<boolean> {
@@ -73,6 +87,14 @@ export class GroupsService {
       .pipe(
         map(response => !!response)
       )
+  }
+
+  private prepareUserGroup(groupId: string, role: string, additionDate: string) {
+    return {
+      groupId: groupId,
+      role: role,
+      additionDate: additionDate
+    };
   }
 
 }

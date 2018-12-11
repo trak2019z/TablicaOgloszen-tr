@@ -73,7 +73,7 @@ export class GroupUsersListComponent implements OnInit {
   onSubmit(): void {
     this.isSubmitted = true;
     if (this.addUserForm.valid) {
-      this.groupsService.addUserToGroup(this.prepareGroupUser(), this.group)
+      this.groupsService.addUserToGroup(this.addUserForm.value.userId, this.addUserForm.value.role, this.group.id)
         .then(result => {
           this.coreService.onSetSuccessMessage('Użytkownik dodany do grupy');
           this.onResetForm();
@@ -112,14 +112,6 @@ export class GroupUsersListComponent implements OnInit {
             })
         }
       });
-  }
-
-  private prepareGroupUser(): GroupUser {
-    return {
-      id: this.addUserForm.value.userId,
-      role: this.addUserForm.value.role,
-      additionDate: new Date().toLocaleString()
-    };
   }
 }
 
