@@ -56,7 +56,7 @@
               <mat-icon>edit</mat-icon>
             </button>
             <button mat-icon-button type="button" (click)="onOpenConfirmationDialog(group.id, group.name)" class="btn btn-danger m-1"
-                    matTooltip="Usuń grupę">
+                    matTooltip="Usuń grupę" [disabled]="group.users">
               <mat-icon>clear</mat-icon>
             </button>
           </td>
@@ -66,7 +66,7 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
       </table>
-      <mat-paginator [pageSizeOptions]="[3, 5, 10]" showFirstLastButtons></mat-paginator>
+      <mat-paginator [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons></mat-paginator>
     </div>
   </mat-card-content>
 </mat-card>

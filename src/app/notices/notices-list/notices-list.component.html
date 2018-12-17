@@ -1,0 +1,89 @@
+<mat-card class="content-container">
+  <br>
+  <mat-card-title>
+    Lista ogłoszeń w systemie
+  </mat-card-title>
+  <br>
+  <mat-card-subtitle>
+    <button routerLink="/notices/create" type="button" mat-raised-button class="button-width btn-primary">
+      <mat-icon>add</mat-icon>
+      Dodaj ogłoszenie
+    </button>
+  </mat-card-subtitle>
+  <br>
+  <mat-card-content class="form-container">
+    <div class="mat-elevation-z8">
+      <table mat-table [dataSource]="noticesDS" matSort>
+
+        <ng-container matColumnDef="title">
+          <th mat-header-cell mat-sort-header *matHeaderCellDef>
+            Tytuł
+          </th>
+          <td mat-cell *matCellDef="let notice" style="width:25%">
+            {{notice.title}}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="group">
+          <th mat-header-cell mat-sort-header *matHeaderCellDef>
+            Grupa
+          </th>
+          <td mat-cell *matCellDef="let notice" style="width:15%">
+            {{notice.groupName}}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="author">
+          <th mat-header-cell mat-sort-header *matHeaderCellDef>
+            Autor
+          </th>
+          <td mat-cell *matCellDef="let notice" style="width:15%">
+            {{notice.authoFirstName}} {{notice.authorLastName}}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="creationDate">
+          <th mat-header-cell mat-sort-header *matHeaderCellDef>
+            Data utworzenia
+          </th>
+          <td mat-cell *matCellDef="let notice" style="width:15%">
+            {{notice.creationDate}}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="expirationDate">
+          <th mat-header-cell mat-sort-header *matHeaderCellDef>
+            Data obowiązywania
+          </th>
+          <td mat-cell *matCellDef="let notice" style="width:15%">
+            {{notice.expirationDate}}
+            <div *ngIf="!notice.expirationDate">
+              Bezterminowe
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="options">
+          <th mat-header-cell *matHeaderCellDef style="text-align: center;">
+            Opcje
+          </th>
+          <td mat-cell *matCellDef="let notice" style="width:15%; text-align: center;">
+            <button mat-icon-button type="button" (click)="onOpenPreviewNoticeDialog(notice)" class="btn-dark ml-1"
+                    matTooltip="Podgląd ogłoszenia">
+              <mat-icon>visibility</mat-icon>
+            </button>
+            <button mat-icon-button type="button" (click)="onOpenConfirmationDialog(notice.id, notice.title)" class="btn btn-danger m-1"
+                    matTooltip="Usuń ogłoszenie">
+              <mat-icon>clear</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+      </table>
+      <mat-paginator [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons></mat-paginator>
+    </div>
+  </mat-card-content>
+</mat-card>

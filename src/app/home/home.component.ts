@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
+import { HomeService } from './home.service';
+import { AuthService } from '../auth/services/auth.service';
+
+import { NoticeHome } from '../notices/notices.interface';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -7,7 +11,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  notices: NoticeHome[] = [];
+
+  constructor(private homeService: HomeService, private authService: AuthService) {
+    this.homeService.getNoticeListForUser(this.authService.user.uid).subscribe(result => {
+      this.notices = result;
+    })
+  }
 
   ngOnInit() {
   }

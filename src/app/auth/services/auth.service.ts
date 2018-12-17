@@ -9,7 +9,7 @@ import { CoreService } from '../../core/core.service';
 import { UserDetail } from '../user';
 
 import { Observable, of, Subject } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, map } from 'rxjs/operators';
 
 @Injectable()
 export class AuthService {
@@ -19,7 +19,7 @@ export class AuthService {
 
   isAdmin: Observable<boolean>;
 
-  constructor(private angularFire: AngularFireAuth,
+  constructor(public angularFire: AngularFireAuth,
               private router: Router,
               private userService: UserService,
               private coreService: CoreService) {
@@ -50,7 +50,7 @@ export class AuthService {
     this.angularFire.auth.signOut()
       .then(() => {
         this.userDetail.next(null);
-        this.coreService.onSetSuccessMessage('Wylogowanie zakońone powodzeniem');
+        this.coreService.onSetSuccessMessage('Wylogowanie zakończone powodzeniem');
         this.router.navigate(['/login']);
       })
       .catch(error => {
@@ -84,14 +84,25 @@ export class AuthService {
     });
   }
 
-  isLoggedAdmin(): Observable<boolean> {
-    return this.userService.isAdmin(this.user.uid).pipe(switchMap(result => {
-      if (result) {
-        return of(true);
-      } else {
-        return of(false);
-      }
-    }))
+  isLoggedAdmin(): Observable<boolean> | boolean {
+    if (this.angularFire.auth.currentUser) {
+      return this.userService.isAdmin(this.angularFire.auth.currentUser.uid).pipe(
+        map((isAdmin: boolean) => {
+          console.log(isAdmin);
+          return isAdmin;
+        })
+      );
+    } else {
+      this.router.navigate(['/home']);
+      return false;
+    }
+  }
+
+  isLogAdmin(): Observable<boolean> {
+    if (this.user) {
+      return this.userService.isAdmin(this.user.uid);
+    }
+    return of(false);
   }
 
   private updateUserDetail(): void {

@@ -1,0 +1,78 @@
+<mat-card class="content-container">
+  <form [formGroup]="addNoticeForm" (ngSubmit)="onSubmit()">
+    <mat-card-title>Nowa ogłoszenie</mat-card-title>
+    <mat-card-content>
+      <div class="form-container">
+        <mat-form-field>
+          <input formControlName="title" id="title" matInput placeholder="Tytuł">
+          <mat-error
+            *ngIf="(isSubmitted || addNoticeForm.get('title').touched) && addNoticeForm.get('title').invalid">
+            <div *ngIf="addNoticeForm.get('title').errors['required']">
+              Tytuł ogłoszenia jest wymagany
+            </div>
+            <div *ngIf="addNoticeForm.get('title').errors['maxlength']">
+              Tytuł ogłoszenia nie może mieć więcej niż 255 znaków
+            </div>
+          </mat-error>
+        </mat-form-field>
+
+        <br>
+
+        <mat-form-field>
+          <mat-select formControlName="groupId" id="groupId" placeholder="Grupa">
+            <mat-option></mat-option>
+            <mat-option *ngFor="let userGroup of userGroups" [value]="userGroup.groupDetial.id">
+              {{userGroup.groupDetial.name}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="(isSubmitted || addNoticeForm.get('groupId').touched) && addNoticeForm.get('groupId').invalid">
+            <div *ngIf="addNoticeForm.get('groupId').errors['required']">
+              Grupa jest wymagana
+            </div>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-radio-group formControlName="isUndated">
+          Rodzaj ogłoszenia
+          <mat-radio-button [value]="true"
+                            (change)="onChangeUndated($event)"
+                            >
+            Bezterminowe
+          </mat-radio-button>
+          <mat-radio-button [value]="false"
+                            (change)="onChangeUndated($event)"
+                            >
+            Terminowe
+          </mat-radio-button>
+        </mat-radio-group>
+
+        <mat-form-field *ngIf="!addNoticeForm.get('isUndated').value">
+          <input matInput formControlName="expirationDate" [min]="minDate" [matDatepicker]="picker" placeholder="Data obowiązywania do">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error
+            *ngIf="(isSubmitted || addNoticeForm.get('expirationDate').touched) && addNoticeForm.get('expirationDate').invalid">
+            <div *ngIf="addNoticeForm.get('expirationDate').errors['required']">
+              Data obowiązywania ogłoszenia terminowego jest wymagana
+            </div>
+          </mat-error>
+        </mat-form-field>
+
+        <br>
+
+        <app-tinymce #tinymce='tinymce' (change)="onChangeTinyMce()"></app-tinymce>
+
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <button type="button" mat-raised-button routerLink="/notices" class="button-width btn-dark">
+        <mat-icon>undo</mat-icon>
+        Powrót
+      </button>
+      <button type="submit" mat-raised-button class="button-width btn-primary">
+        <mat-icon>save</mat-icon>
+        Dodaj
+      </button>
+    </mat-card-actions>
+  </form>
+</mat-card>

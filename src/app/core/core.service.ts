@@ -9,6 +9,8 @@ import { Observable } from 'rxjs';
 @Injectable()
 export class CoreService {
 
+  static readonly DATE_FORMAT: string =  'YYYY.MM.DD';
+
   constructor(public dialog: MatDialog,
               private toastrService: ToastrService) {}
 

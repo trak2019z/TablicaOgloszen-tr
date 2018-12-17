@@ -83,8 +83,17 @@ export class GroupUsersListComponent implements OnInit {
     }
   }
 
-  onSave(): void {
-    this.groupsService.updateGroupUsersList(this.group.id, Array.from(this.groupUsersDS.data));
+  onChangeUserRole(groupUser: GroupUser): void {
+    const firstName = groupUser.userDetail.firstName;
+    const lastName = groupUser.userDetail.lastName;
+    groupUser.userDetail = null;
+    this.groupsService.updateGroupUser(this.group.id, groupUser)
+      .then(result => {
+        this.coreService.onSetSuccessMessage('Rola użytkownika ' + firstName + ' ' + lastName + ' została zaktualizowana');
+      })
+      .catch(error => {
+        this.coreService.onSetErrorMessage('Rola użytkownika ' + firstName + ' ' + lastName + ' nie została zaktualizowana')
+      })
   }
 
   private setValidators(): void {
