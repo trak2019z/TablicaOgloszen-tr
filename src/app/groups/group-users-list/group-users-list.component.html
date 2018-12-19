@@ -51,7 +51,9 @@
 
               <div class="form-group col-md-2">
                 <button type="submit" mat-raised-button class="btn-success"
-                        [disabled]="!addUserForm.valid">Dodaj
+                        [disabled]="!addUserForm.valid">
+                  <mat-icon>person_add</mat-icon>
+                  Dodaj
                 </button>
               </div>
 
@@ -98,7 +100,7 @@
             <ng-container matColumnDef="options">
               <th mat-header-cell *matHeaderCellDef style="text-align: center;">Opcje</th>
               <td mat-cell *matCellDef="let groupUser" style="width: 10%; text-align: center;">
-                <button mat-icon-button type="button" class="btn-danger" matTooltip="Usuń użytkownika z grupy"
+                <button mat-raised-button type="button" class="btn-outline-danger m-1" matTooltip="Usuń użytkownika z grupy"
                         (click)="onOpenConfirmationDialog(groupUser.userId, (groupUser.userDetail.firstName + groupUser.userDetail.lastName))">
                   <mat-icon>clear</mat-icon>
                 </button>

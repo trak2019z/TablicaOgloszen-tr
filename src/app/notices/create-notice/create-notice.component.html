@@ -55,6 +55,9 @@
             <div *ngIf="addNoticeForm.get('expirationDate').errors['required']">
               Data obowiązywania ogłoszenia terminowego jest wymagana
             </div>
+            <div *ngIf="addNoticeForm.get('expirationDate').errors['matDatepickerParse'] || addNoticeForm.get('expirationDate').errors['matDatepickerMin']">
+              Data obowiązywania jest niepoprawna
+            </div>
           </mat-error>
         </mat-form-field>
 

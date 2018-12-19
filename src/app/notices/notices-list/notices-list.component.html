@@ -68,11 +68,11 @@
             Opcje
           </th>
           <td mat-cell *matCellDef="let notice" style="width:15%; text-align: center;">
-            <button mat-icon-button type="button" (click)="onOpenPreviewNoticeDialog(notice)" class="btn-dark ml-1"
+            <button mat-raised-button type="button" (click)="onOpenPreviewNoticeDialog(notice)" class="btn-outline-dark ml-1"
                     matTooltip="Podgląd ogłoszenia">
               <mat-icon>visibility</mat-icon>
             </button>
-            <button mat-icon-button type="button" (click)="onOpenConfirmationDialog(notice.id, notice.title)" class="btn btn-danger m-1"
+            <button mat-raised-button type="button" (click)="onOpenConfirmationDialog(notice.id, notice.title)" class="btn btn-outline-danger m-1"
                     matTooltip="Usuń ogłoszenie">
               <mat-icon>clear</mat-icon>
             </button>

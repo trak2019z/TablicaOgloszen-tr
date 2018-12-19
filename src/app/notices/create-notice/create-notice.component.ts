@@ -109,14 +109,13 @@ export class CreateNoticeComponent implements OnInit {
   }
 
   private prepareNotice(): Notice {
-    let expirationDate = moment(this.addNoticeForm.value.expirationDate).format(CoreService.DATE_FORMAT);
     return {
       groupId: this.addNoticeForm.value.groupId ? this.addNoticeForm.value.groupId : null,
       userId: this.authService.user.uid,
       title: this.addNoticeForm.value.title,
       content: this.addNoticeForm.value.content,
       creationDate: new Date().toLocaleString(),
-      expirationDate: moment(expirationDate).isValid() ? expirationDate : null,
+      expirationDate: this.addNoticeForm.value.expirationDate ? moment(new Date(this.addNoticeForm.value.expirationDate)).format(CoreService.DATE_FORMAT) : null,
     }
   }
 }

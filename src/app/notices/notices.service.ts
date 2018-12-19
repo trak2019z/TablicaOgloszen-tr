@@ -22,7 +22,7 @@ export class NoticesService {
         }),
         map(this.filterGroupsWhichUserCanManage),
         switchMap((userGroups: Array<UserGroup>) => {
-          return this.getNoticeListForGroups(this.userGroupArrayToStringArray(userGroups), isAdmin);
+          return this.getNoticeListForGroups(this.userGroupArrayToStringArray(userGroups), isAdmin, userId);
         })
       );
   }
@@ -58,7 +58,7 @@ export class NoticesService {
       );
   }
 
-  private getNoticeListForGroups(groups: string[], isAdmin: boolean): Observable<Array<NoticeHome>> {
+  private getNoticeListForGroups(groups: string[], isAdmin: boolean, userId: string): Observable<Array<NoticeHome>> {
     return this.angularFireDB.list<NoticeHome>('notices', ref => {
       return ref.orderByChild('creationDate');
     }).valueChanges()
@@ -72,6 +72,11 @@ export class NoticesService {
                 return groupId === notice.groupId;
               });
             }
+          });
+        }),
+        map((notices: NoticeHome[]) => {
+          return notices.filter(notice => {
+            return notice.userId === userId;
           });
         }),
         map((notices: NoticeHome[]) => {

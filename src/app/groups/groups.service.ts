@@ -4,10 +4,10 @@ import { AngularFireDatabase } from 'angularfire2/database';
 import { UserService } from '../auth/services/user.service';
 
 import { Group, GroupUser } from './group.interface';
-import { UserGroup } from '../auth';
+import { UserDetail, UserGroup } from '../auth';
 
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 
 @Injectable()
 export class GroupsService {
@@ -24,8 +24,30 @@ export class GroupsService {
     return this.angularFireDB.database.ref('groups/' + group.id).set(group);
   }
 
-  getGroupList(): Observable<Array<Group>> {
-    return this.angularFireDB.list<Group>('groups').valueChanges();
+  getGroupList(userId: string, isAdmin: boolean): Observable<Array<Group>> {
+    if (isAdmin) {
+      return this.angularFireDB.list<Group>('groups').valueChanges();
+    } else {
+      return this.angularFireDB.object<UserDetail>('users/' + userId).valueChanges()
+        .pipe(
+          map((userDetail: UserDetail) => {
+            return userDetail.groups;
+          }),
+          map(this.filterGroupsWhichUserIsAdmin),
+          switchMap((userGroups: UserGroup[]) => {
+            return this.angularFireDB.list<Group>('groups').valueChanges()
+              .pipe(
+                map((groups: Group[]) => {
+                  return groups.filter((group: Group) => {
+                    return userGroups.some((userGroup: UserGroup) => {
+                      return userGroup.groupId === group.id;
+                    })
+                  })
+                })
+              );
+          })
+        );
+    }
   }
 
   getGroup(id: string): Observable<Group> {
@@ -90,6 +112,28 @@ export class GroupsService {
       role: role,
       additionDate: additionDate
     };
+  }
+
+  private filterGroupsWhichUserIsAdmin(userGroups: UserGroup[]): UserGroup[] {
+    let resultArray = Object.keys(userGroups).map(function (index) {
+      return userGroups[index];
+    });
+    return resultArray.filter((userGroup: UserGroup) => {
+      return userGroup.role === 'ADMIN';
+    });
+  }
+
+  private getGroupsById(userGroups: UserGroup[]): Observable<Group[]> {
+    return this.angularFireDB.list<Group>('groups').valueChanges()
+      .pipe(
+        map((groups: Group[]) => {
+          return groups.filter((group: Group) => {
+            return userGroups.some((userGroup: UserGroup) => {
+              return userGroup.groupId === group.id;
+            })
+          })
+        })
+      );
   }
 
 }
