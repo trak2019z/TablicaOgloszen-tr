@@ -5,6 +5,7 @@ import { PageNotFoundComponent } from './core';
 
 import { HomeGuardService } from './auth/guards/home-guard.service';
 import { GroupGuardService } from './auth/guards/group-guard.service';
+import { NoticeGuardService } from './auth/guards/notice-guard.service';
 
 const appRoutes: Routes = [
   {
@@ -21,6 +22,11 @@ const appRoutes: Routes = [
     path: 'groups',
     loadChildren: './groups/groups.module#GroupsModule',
     canLoad: [GroupGuardService]
+  },
+  {
+    path: 'notices',
+    loadChildren: './notices/notices.module#NoticesModule',
+    canLoad: [NoticeGuardService]
   },
   {
     path: '**',

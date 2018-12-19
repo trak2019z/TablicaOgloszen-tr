@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { Group } from '../group.interface';
 import { GroupsService } from '../groups.service';
+import { CoreService } from '../../core/core.service';
 
+import { Group } from '../group.interface';
 
 @Component({
   selector: 'app-edit-group',
@@ -19,6 +20,7 @@ export class EditGroupComponent implements OnInit {
   errorMessage: string;
 
   constructor(private groupsService: GroupsService,
+              private coreService: CoreService,
               private activatedRoute: ActivatedRoute,
               private router: Router) {
   }
@@ -38,12 +40,13 @@ export class EditGroupComponent implements OnInit {
     if (this.editGroupForm.valid) {
       this.groupsService.updateGroup(this.prepareGroup())
         .then(result => {
+          this.coreService.onSetSuccessMessage('Grupa została zaktualizowana')
           this.router.navigate(['/groups']);
         })
         .catch(error => {
           this.isFirebaseError = true;
           this.errorMessage = error.toString();
-          console.log(error);
+          this.coreService.onSetErrorMessage('Nie udało się zaktualizować grupy')
         })
     }
   }

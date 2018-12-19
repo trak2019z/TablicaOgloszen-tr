@@ -15,7 +15,8 @@ import {
   MatSortModule,
   MatIconModule,
   MatTooltipModule,
-  MatPaginatorIntl
+  MatPaginatorIntl,
+  MatRadioModule
 } from '@angular/material';
 import { getPolishPaginatorIntl } from './polish-paginator-intl';
 
@@ -44,7 +45,8 @@ import { getPolishPaginatorIntl } from './polish-paginator-intl';
     MatDialogModule,
     MatSortModule,
     MatIconModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatRadioModule
   ]
 })
 export class SharedModule {

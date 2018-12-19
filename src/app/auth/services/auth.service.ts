@@ -4,10 +4,12 @@ import { User } from 'firebase';
 import { Router } from '@angular/router';
 
 import { UserService } from './user.service';
+import { CoreService } from '../../core/core.service';
+
 import { UserDetail } from '../user';
 
 import { Observable, of, Subject } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, map } from 'rxjs/operators';
 
 @Injectable()
 export class AuthService {
@@ -17,9 +19,10 @@ export class AuthService {
 
   isAdmin: Observable<boolean>;
 
-  constructor(private angularFire: AngularFireAuth,
+  constructor(public angularFire: AngularFireAuth,
               private router: Router,
-              private userService: UserService) {
+              private userService: UserService,
+              private coreService: CoreService) {
     this.angularFire.authState.subscribe(user => {
       this.user = user;
       if (user) this.updateUserDetail();
@@ -44,10 +47,15 @@ export class AuthService {
   }
 
   logOut(): void {
-    this.angularFire.auth.signOut().then(() => {
-      this.userDetail.next(null);
-      this.router.navigate(['/login'])
-    });
+    this.angularFire.auth.signOut()
+      .then(() => {
+        this.userDetail.next(null);
+        this.coreService.onSetSuccessMessage('Wylogowanie zakończone powodzeniem');
+        this.router.navigate(['/login']);
+      })
+      .catch(error => {
+        this.coreService.onSetErrorMessage('Wylogowanie się nie powiodło');
+      });
   }
 
   getUserDetailObservable(): Observable<UserDetail> {
@@ -76,14 +84,25 @@ export class AuthService {
     });
   }
 
-  isLoggedAdmin(): Observable<boolean> {
-    return this.userService.isAdmin(this.user.uid).pipe(switchMap(result => {
-      if (result) {
-        return of(true);
-      } else {
-        return of(false);
-      }
-    }))
+  isLoggedAdmin(): Observable<boolean> | boolean {
+    if (this.angularFire.auth.currentUser) {
+      return this.userService.isAdmin(this.angularFire.auth.currentUser.uid).pipe(
+        map((isAdmin: boolean) => {
+          console.log(isAdmin);
+          return isAdmin;
+        })
+      );
+    } else {
+      this.router.navigate(['/home']);
+      return false;
+    }
+  }
+
+  isLogAdmin(): Observable<boolean> {
+    if (this.user) {
+      return this.userService.isAdmin(this.user.uid);
+    }
+    return of(false);
   }
 
   private updateUserDetail(): void {

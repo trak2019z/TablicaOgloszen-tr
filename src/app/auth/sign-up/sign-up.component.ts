@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { UserDetail } from '../index';
 import { AuthService } from '../services/auth.service';
 import { UserService } from '../services/user.service';
+import { CoreService } from '../../core/core.service';
+
+import { UserDetail } from '../index';
 
 @Component({
   selector: 'app-sign-up',
@@ -19,6 +21,7 @@ export class SignUpComponent implements OnInit {
   errorMessage: string;
 
   constructor(private authService: AuthService,
+              private coreService: CoreService,
               private router: Router,
               private userService: UserService) {
   }
@@ -45,10 +48,12 @@ export class SignUpComponent implements OnInit {
       this.authService.signUp(this.signUpForm.value.email, this.signUpForm.value.password)
         .then(user => {
           this.userService.createUserDetail(this.prepareUserDetail(user.user.uid.toString()));
+          this.coreService.onSetSuccessMessage('Rejestracja użytkownika zakończona powodzeniem');
           this.router.navigate(['/home']);
         }).catch(error => {
         this.isLoggingError = true;
         this.errorMessage = error.toString();
+        this.coreService.onSetErrorMessage('Rejestracja się nie powiodła');
       });
     }
   }

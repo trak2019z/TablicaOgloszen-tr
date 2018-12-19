@@ -1,0 +1,7 @@
+.content-container {
+  padding: 35px;
+}
+.mat-radio-button ~ .mat-radio-button {
+  padding-right: 16px;
+  padding-left: 16px;
+}

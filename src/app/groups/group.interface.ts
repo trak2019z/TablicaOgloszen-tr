@@ -9,7 +9,7 @@ export interface Group {
 }
 
 export interface GroupUser {
-  id: string;
+  userId: string;
   role: string;
   additionDate: string;
   userDetail?: UserDetail;

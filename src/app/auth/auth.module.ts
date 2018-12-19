@@ -11,6 +11,7 @@ import { HomeGuardService } from './guards/home-guard.service';
 import { LoginGuardService } from './guards/login-guard.service';
 import { SignUpGuardService } from './guards/sign-up-guard.service';
 import { GroupGuardService } from './guards/group-guard.service';
+import { NoticeGuardService } from './guards/notice-guard.service';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { GroupGuardService } from './guards/group-guard.service';
     HomeGuardService,
     LoginGuardService,
     SignUpGuardService,
-    GroupGuardService
+    GroupGuardService,
+    NoticeGuardService
   ],
   exports: []
 })

@@ -1,16 +1,16 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-
 import { MatPaginator, MatTableDataSource, MatSort} from '@angular/material';
 
-import { Group, GroupUser, UserRoleEnum } from '../group.interface';
-import { UserDetail } from '../../auth';
 import { GroupsService } from '../groups.service';
 import { UserService } from '../../auth/services/user.service';
 import { CoreService } from '../../core/core.service';
 
 import { GroupValidators } from '../groups.validators';
+
+import { Group, GroupUser, UserRoleEnum } from '../group.interface';
+import { UserDetail } from '../../auth';
 
 @Component({
   selector: 'app-group-users-list',
@@ -73,17 +73,27 @@ export class GroupUsersListComponent implements OnInit {
   onSubmit(): void {
     this.isSubmitted = true;
     if (this.addUserForm.valid) {
-      this.groupsService.addUserToGroup(this.prepareGroupUser(), this.group)
+      this.groupsService.addUserToGroup(this.addUserForm.value.userId, this.addUserForm.value.role, this.group.id)
         .then(result => {
+          this.coreService.onSetSuccessMessage('Użytkownik dodany do grupy');
           this.onResetForm();
         }).catch(error => {
-          console.log(error);
+          this.coreService.onSetErrorMessage('Nie udało się dodać użytkownika do grupy');
       })
     }
   }
 
-  onSave(): void {
-    this.groupsService.updateGroupUsersList(this.group.id, Array.from(this.groupUsersDS.data));
+  onChangeUserRole(groupUser: GroupUser): void {
+    const firstName = groupUser.userDetail.firstName;
+    const lastName = groupUser.userDetail.lastName;
+    groupUser.userDetail = null;
+    this.groupsService.updateGroupUser(this.group.id, groupUser)
+      .then(result => {
+        this.coreService.onSetSuccessMessage('Rola użytkownika ' + firstName + ' ' + lastName + ' została zaktualizowana');
+      })
+      .catch(error => {
+        this.coreService.onSetErrorMessage('Rola użytkownika ' + firstName + ' ' + lastName + ' nie została zaktualizowana')
+      })
   }
 
   private setValidators(): void {
@@ -97,31 +107,20 @@ export class GroupUsersListComponent implements OnInit {
     this.addUserForm.reset();
   }
 
-  onRemoveUser(userId: string): void {
-    this.groupsService.removeUserFromGroup(this.group.id, userId);
-  }
-
   onOpenConfirmationDialog(id: string, name: string): void {
     let question: string = 'Czy na pewno chcesz usunąć użytkownika ' + name + ' z grupy?';
-    this.coreService.onOpenConfirmationDialog(id, question, 'Usuń użytkownika z grupy').subscribe((id: string) => {
-      if (id) {
-        this.groupsService.removeUserFromGroup(this.group.id, id)
-          .then(result => {
-            console.log(result);
-          })
-          .catch(error => {
-            console.log(error);
-          })
-      }
-    });
-  }
-
-  private prepareGroupUser(): GroupUser {
-    return {
-      id: this.addUserForm.value.userId,
-      role: this.addUserForm.value.role,
-      additionDate: new Date().toLocaleString()
-    };
+    this.coreService.onOpenConfirmationDialog(id, question, 'Usuń użytkownika z grupy')
+      .subscribe((id: string) => {
+        if (id) {
+          this.groupsService.removeUserFromGroup(this.group.id, id)
+            .then(result => {
+              this.coreService.onSetSuccessMessage('Użytkownik usunięty z grupy');
+            })
+            .catch(error => {
+              this.coreService.onSetErrorMessage('Użytkownik nie został usunięty');
+            })
+        }
+      });
   }
 }
 

@@ -12,14 +12,18 @@
       <li class="nav-item">
         <a class="nav-link" routerLink="/groups">Grupy</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/notices">Ogłoszenia</a>
+      </li>
     </ul>
     <ul class="navbar-nav">
       <div>
         <span class="navbar-text mr-3"></span>
         <span class="navbar-text mr-1">{{user | transformUsername}}</span>
         <span *ngIf="user && user.isAdmin" class="navbar-text admin">[Administrator]</span>
-        <button class="btn btn btn-primary ml-3" type="button" (click)="onLogOut()">
-          <span>Wyloguj</span>
+        <button type="button" mat-raised-button (click)="onLogOut()" class="btn-primary m-1">
+          <mat-icon>power_settings_new</mat-icon>
+          Wyloguj
         </button>
       </div>
     </ul>
