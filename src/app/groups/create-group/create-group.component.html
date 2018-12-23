@@ -1,0 +1,51 @@
+<mat-card class="content-container">
+  <form [formGroup]="createGroupForm" (ngSubmit)="onSubmit()">
+    <mat-card-title>Nowa grupa</mat-card-title>
+    <mat-card-subtitle>
+      Aby dodać nową grupę wpisz nazwę i ewentualnie opis.
+    </mat-card-subtitle>
+    <mat-card-content>
+      <div class="form-container">
+
+        <mat-form-field>
+          <input formControlName="name" id="name" matInput placeholder="Nazwa">
+          <mat-error
+            *ngIf="(isSubmitted || createGroupForm.get('name').touched) && createGroupForm.get('name').invalid">
+            <div *ngIf="createGroupForm.get('name').errors['required']">
+              Nazwa grupy jest wymagana
+            </div>
+            <div *ngIf="createGroupForm.get('name').errors['maxlength']">
+              Nazwa grupy nie może mieć więcej niż 20 znaków
+            </div>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <textarea formControlName="description" id="description" matInput placeholder="Opis" rows="2"
+                    style="resize: none;"></textarea>
+          <mat-error
+            *ngIf="(isSubmitted || createGroupForm.get('description').touched) && createGroupForm.get('description').invalid">
+            <div *ngIf="createGroupForm.get('description').errors['maxlength']">
+              Opis grupy nie może mieć więcej niż 255 znaków
+            </div>
+          </mat-error>
+        </mat-form-field>
+
+        <div *ngIf="isFirebaseError" class="alert alert-danger" role="alert">
+          {{errorMessage}}
+        </div>
+
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <button type="button" mat-raised-button routerLink="/groups" class="button-width btn-dark">
+        <mat-icon>undo</mat-icon>
+        Powrót
+      </button>
+      <button type="submit" mat-raised-button class="button-width btn-primary">
+        <mat-icon>save</mat-icon>
+        Dodaj
+      </button>
+    </mat-card-actions>
+  </form>
+</mat-card>

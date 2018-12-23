@@ -1,0 +1,24 @@
+<div *ngFor="let notice of notices">
+  <mat-card class="content-container">
+    <mat-card-title>
+      {{notice.title}}
+    </mat-card-title>
+    <mat-card-subtitle>
+      Dodano przez
+      <b>{{notice.authoFirstName}} {{notice.authorLastName}}</b>
+      dnia {{notice.creationDate}}
+      <div *ngIf="notice.expirationDate">
+        Obowiązuje do {{notice.expirationDate}}
+      </div>
+    </mat-card-subtitle>
+    <mat-card-content class="form-container">
+        <div [innerHTML]="notice.content">
+        </div>
+    </mat-card-content>
+    <mat-card-footer>
+      <div *ngIf="notice.groupName">
+        Grupa: <b>{{notice.groupName}}</b>
+      </div>
+    </mat-card-footer>
+  </mat-card>
+</div>
