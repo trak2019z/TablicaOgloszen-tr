@@ -1,14 +1,14 @@
-import { Injectable } from '@angular/core';
-import { AngularFireDatabase } from 'angularfire2/database';
+import {Injectable} from '@angular/core';
+import {AngularFireDatabase} from 'angularfire2/database';
 
-import { UserDetail, UserGroup } from '../auth';
-import { NoticeHome } from '../notices/notices.interface';
-import { Group } from '../groups/group.interface';
+import {UserDetail, UserGroup} from '../auth';
+import {NoticeHome} from '../notices/notices.interface';
+import {Group} from '../groups/group.interface';
 
-import { Observable } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import {Observable} from 'rxjs';
+import {map, switchMap} from 'rxjs/operators';
 
-import * as moment          from 'moment';
+import * as moment from 'moment';
 
 @Injectable()
 export class HomeService {
@@ -16,7 +16,7 @@ export class HomeService {
   constructor(private angularFireDB: AngularFireDatabase) {
   }
 
-  getNoticeListForUser(userId: string): Observable<Array<NoticeHome>> {
+  public getNoticeListForUser(userId: string): Observable<Array<NoticeHome>> {
     return this.angularFireDB.object<UserDetail>('users/' + userId).valueChanges()
       .pipe(
         switchMap((userDetail: UserDetail) => {
@@ -26,40 +26,43 @@ export class HomeService {
   }
 
   private getNoticeList(groups: string[]): Observable<Array<NoticeHome>> {
-    return this.angularFireDB.list<NoticeHome>('notices', ref => {
-      return ref.orderByChild('creationDate');
-    }).valueChanges()
+    return this.angularFireDB.list<NoticeHome>('notices', this.orderByCreationDate)
+      .valueChanges()
       .pipe(
-        map(this.filterExpirationDate),
-        map((notices: NoticeHome[]) => {
-          return notices.filter(notice => {
-            if (!notice.groupId) {
-              return true;
-            } else {
-              return groups.some((groupId: string) => {
-                return groupId === notice.groupId;
-              });
-            }
-          });
-        }),
+        map(this.filterByExpirationDate),
+        map(notices => this.filterNoticesByGroups(notices, groups)),
         map((notices: NoticeHome[]) => {
           return notices.map((notice: NoticeHome) => {
-            this.angularFireDB.object<UserDetail>('users/' + notice.userId).valueChanges().subscribe(userDetail => {
-              notice.authoFirstName = userDetail.firstName;
-              notice.authorLastName = userDetail.lastName;
-            });
-            if (notice.groupId) {
-              this.angularFireDB.object<Group>('groups/' + notice.groupId).valueChanges().subscribe(group => {
-                notice.groupName = group.name;
+            this.angularFireDB.object<UserDetail>('users/' + notice.userId).valueChanges()
+              .subscribe(userDetail => {
+                notice.authoFirstName = userDetail.firstName;
+                notice.authorLastName = userDetail.lastName;
               });
+            if (notice.groupId) {
+              this.angularFireDB.object<Group>('groups/' + notice.groupId).valueChanges()
+                .subscribe(group => {
+                  notice.groupName = group.name;
+                });
             }
             return notice;
           });
-        }),
-        map((notices: NoticeHome[]) => {
-          return notices.reverse();
         })
       );
+  }
+
+  private orderByCreationDate(ref) {
+    return ref.orderByChild('creationDate');
+  }
+
+  private filterNoticesByGroups(notices: Array<NoticeHome>, groups: string[]): Array<NoticeHome> {
+    return notices.filter(notice => {
+      if (!notice.groupId) {
+        return true;
+      } else {
+        return groups.some((groupId: string) => {
+          return groupId === notice.groupId;
+        });
+      }});
   }
 
   private userGroupArrayToStringArray(userGroups: Array<UserGroup>): Array<string> {
@@ -75,7 +78,7 @@ export class HomeService {
     return array;
   }
 
-  private filterExpirationDate(notices: NoticeHome[]): NoticeHome[] {
+  private filterByExpirationDate(notices: Array<NoticeHome>): Array<NoticeHome> {
     return notices.filter((notice: NoticeHome) => {
       if (!notice.expirationDate) {
         return true;
